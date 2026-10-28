@@ -9,12 +9,12 @@ Almost everything lives in **`config.js`**:
 
 - your email, phone, Instagram
 - pickup info
-- the menu (names, descriptions, prices, emoji)
+- the menu (bread, sticker, shirt — names, descriptions, prices, emoji)
 - payment links
 
 Edit it on GitHub (click the file → ✏️ pencil icon → **Commit changes**) and the site updates in a minute or two.
 
-> The menu items and prices in `config.js` are starting examples — swap in your real bakes and prices before sharing the site.
+> Prices are blank for now — add them in `config.js` (e.g. `price: "$10"`). Blank prices are simply hidden.
 > There are no reviews on the site. If you'd like to add real ones from customers later, ask them first and quote them word for word.
 
 ## 🚀 Putting it online (GitHub Pages)

@@ -34,45 +34,24 @@ window.BAKERY = {
   // emoji is just the little picture on each card.
   menu: [
     {
-      name: "Classic Sourdough",
-      description: "Crackly crust, soft chewy middle. Made with my own starter and a lot of patience.",
-      price: "$10",                   // ← set your real price
+      name: "100% Whole Wheat Bread",
+      description: "A hearty loaf made with 100% whole wheat flour. Great for sandwiches, toast, and lots of butter.",
+      price: "",                      // ← set your price, e.g. "$10" (blank = hidden)
       emoji: "🍞",
       payLink: ""                     // ← paste a Stripe/Square/PayPal link here
     },
     {
-      name: "Honey Butter Rolls",
-      description: "A half dozen pillowy rolls brushed with honey butter. Dangerously easy to eat.",
-      price: "$8",
-      emoji: "🧈",
+      name: "Bread n’ Buttah Sticker",
+      description: "Show some love for your local baker! Perfect for water bottles and laptops.",
+      price: "",
+      emoji: "✨",
       payLink: ""
     },
     {
-      name: "Cinnamon Swirl Loaf",
-      description: "Soft sandwich bread with a ribbon of cinnamon sugar. Toast it. Trust me.",
-      price: "$12",
-      emoji: "🌀",
-      payLink: ""
-    },
-    {
-      name: "Focaccia",
-      description: "Olive oil, flaky salt, dimpled by hand. Toppings change with the seasons.",
-      price: "$11",
-      emoji: "🫒",
-      payLink: ""
-    },
-    {
-      name: "Banana Bread",
-      description: "Moist, cozy, and made with very ripe bananas — the way it should be.",
-      price: "$9",
-      emoji: "🍌",
-      payLink: ""
-    },
-    {
-      name: "Chocolate Chip Cookies",
-      description: "A dozen chewy cookies with puddles of chocolate. Brown butter, of course.",
-      price: "$10",
-      emoji: "🍪",
+      name: "Bread n’ Buttah Shirt",
+      description: "A comfy Bread n’ Buttah t-shirt. Ask about sizes when you order!",
+      price: "",
+      emoji: "👕",
       payLink: ""
     }
   ]
