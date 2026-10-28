@@ -17,7 +17,7 @@ window.BAKERY = {
   baker: "Zoe Strickland",
 
   // Where people can reach you. Leave "" to hide one.
-  email: "zoestrickland@gmail.com",
+  email: "zoesbread@gmail.com",
   phone: "",                          // e.g. "(555) 123-4567"
   instagram: "",                      // e.g. "breadnbuttah" (no @)
 
