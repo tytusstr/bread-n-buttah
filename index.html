@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bread n’ Buttah — homemade bread by Zoe Strickland</title>
+  <meta name="description" content="Bread n’ Buttah is a tiny local bakery. Every loaf is made by hand by Zoe Strickland.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍞</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="nav">
+    <a href="#top" class="logo">🍞 Bread n’ Buttah</a>
+    <nav>
+      <a href="#menu">Menu</a>
+      <a href="#how">How it works</a>
+      <a href="#about">About</a>
+      <a href="#contact">Say hi</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow">a tiny local bakery ✿</p>
+        <h1>Bread n’ <span class="butter">Buttah</span></h1>
+        <p class="lead">Warm, homemade bread baked in small batches, all by hand, by <strong data-bakery="baker">Zoe Strickland</strong>.</p>
+        <div class="hero-buttons">
+          <a href="#menu" class="btn btn-primary">See what’s baking</a>
+          <a href="#how" class="btn btn-ghost">How ordering works</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <!-- cute loaf with a pat of butter -->
+        <svg viewBox="0 0 320 260" class="loaf">
+          <ellipse cx="160" cy="235" rx="130" ry="14" fill="#e9cfa8" opacity=".6"/>
+          <path d="M40 150 C40 70 100 40 160 40 C220 40 280 70 280 150 L280 210 C280 222 270 230 258 230 L62 230 C50 230 40 222 40 210 Z" fill="#d9944a"/>
+          <path d="M40 150 C40 70 100 40 160 40 C220 40 280 70 280 150 C250 140 70 140 40 150 Z" fill="#c27a33"/>
+          <path d="M95 85 q15 -18 30 0 M145 72 q15 -18 30 0 M195 85 q15 -18 30 0" stroke="#f3c98b" stroke-width="7" fill="none" stroke-linecap="round"/>
+          <circle cx="120" cy="175" r="7" fill="#4a2c17"/>
+          <circle cx="200" cy="175" r="7" fill="#4a2c17"/>
+          <circle cx="123" cy="172" r="2.2" fill="#fff"/>
+          <circle cx="203" cy="172" r="2.2" fill="#fff"/>
+          <path d="M145 188 q15 14 30 0" stroke="#4a2c17" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="100" cy="195" rx="14" ry="8" fill="#f2a3a3" opacity=".75"/>
+          <ellipse cx="220" cy="195" rx="14" ry="8" fill="#f2a3a3" opacity=".75"/>
+          <g class="butter-pat">
+            <rect x="182" y="18" width="70" height="40" rx="8" fill="#ffe27a" transform="rotate(12 217 38)"/>
+            <rect x="182" y="18" width="70" height="12" rx="6" fill="#fff1b0" transform="rotate(12 217 38)"/>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <div class="wave" aria-hidden="true"></div>
+
+    <!-- MENU -->
+    <section id="menu" class="menu">
+      <h2>This week’s bakes</h2>
+      <p class="section-sub">Everything is made from scratch, one batch at a time. Quantities are small, so order early!</p>
+      <div class="menu-grid" id="menu-grid">
+        <!-- filled in by script.js from config.js -->
+      </div>
+      <p class="pay-extras" id="pay-extras" hidden></p>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section id="how" class="how">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li>
+          <span class="step-icon">🛒</span>
+          <h3>Pick your bread</h3>
+          <p>Choose from this week’s menu and pay securely online.</p>
+        </li>
+        <li>
+          <span class="step-icon">👩‍🍳</span>
+          <h3>Zoe bakes it</h3>
+          <p>Mixed, shaped, and baked by hand — just for you.</p>
+        </li>
+        <li>
+          <span class="step-icon">🧺</span>
+          <h3>Pick it up</h3>
+          <p id="pickup-info">Order by Wednesday night, pick up fresh on Saturday morning.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="about">
+      <div class="about-card">
+        <div class="about-emoji" aria-hidden="true">👩‍🍳</div>
+        <div>
+          <h2>Hi, I’m <span data-bakery="baker">Zoe</span>!</h2>
+          <p>Bread n’ Buttah is my little one-person bakery. I make every single thing myself — from feeding the sourdough starter to shaping each loaf and packing up your order.</p>
+          <p>No factory, no big ovens, just real ingredients, a home kitchen, and a lot of love (and flour everywhere). Thanks so much for supporting a small local baker. 💛</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <h2>Say hi!</h2>
+      <p class="section-sub">Questions, custom orders, or just want to talk bread? I’d love to hear from you.</p>
+      <div class="contact-links" id="contact-links"></div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Made with flour, butter &amp; love by <span data-bakery="baker">Zoe Strickland</span> · <span id="year"></span></p>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
