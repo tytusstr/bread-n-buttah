@@ -9,7 +9,7 @@ Almost everything lives in **`config.js`**:
 
 - your email, phone, Instagram
 - pickup info
-- the menu (bread, sticker, shirt — names, descriptions, prices, emoji)
+- the menu (bread, sticker, shirt — names, descriptions, prices, icons)
 - payment links
 
 Edit it on GitHub (click the file → ✏️ pencil icon → **Commit changes**) and the site updates in a minute or two.
