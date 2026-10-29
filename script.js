@@ -88,14 +88,18 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Slide the striped separator to the left as the page scrolls
-  var bands = document.querySelectorAll(".band");
+  // Slide the striped separator to the left as the page scrolls.
+  // Moves a pre-drawn strip with a GPU transform (smooth), looping every
+  // 40px stripe and snapping to whole screen pixels (keeps stripes even).
+  var strips = document.querySelectorAll(".band-strip");
+  var STRIPE = 40, SPEED = 0.8;
   function slideBands() {
     var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    var pos = (-y * 0.8) + "px 0";
-    for (var i = 0; i < bands.length; i++) bands[i].style.backgroundPosition = pos;
+    var dpr = window.devicePixelRatio || 1;
+    var x = Math.round(((y * SPEED) % STRIPE) * dpr) / dpr;
+    for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
   }
-  if (bands.length) {
+  if (strips.length) {
     var ticking = false;
     window.addEventListener("scroll", function () {
       if (ticking) return;
