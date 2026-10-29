@@ -17,9 +17,10 @@ window.BAKERY = {
   baker: "Zoë Strickland",
 
   // Where people can reach you. Leave "" to hide one.
-  email: "zoesbread@gmail.com",
+  email: "zoedstrickland@gmail.com",
   phone: "(541) 280-8776",
-  instagram: "",                      // e.g. "breadnbuttah" (no @)
+  instagram: "bend_bread_n'_buttah",  // shown as written (no @)
+  instagramLink: "",                  // optional: full profile URL to make it clickable
 
   // Pickup / delivery info (shown in the "How it works" section)
   pickupInfo: "Delivery & pick-up every Saturday. I’ll send you the details when you order!",

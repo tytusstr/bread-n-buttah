@@ -82,7 +82,9 @@
     var ig = document.getElementById("ig-line");
     ig.appendChild(document.createTextNode("Instagram"));
     ig.appendChild(el("br"));
-    ig.appendChild(el("a", { href: "https://instagram.com/" + b.instagram, target: "_blank", rel: "noopener" }, "@" + b.instagram));
+    ig.appendChild(b.instagramLink
+      ? el("a", { href: b.instagramLink, target: "_blank", rel: "noopener" }, "@" + b.instagram)
+      : document.createTextNode("@" + b.instagram));
     ig.hidden = false;
   }
 
