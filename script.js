@@ -92,7 +92,7 @@
   var bands = document.querySelectorAll(".band");
   function slideBands() {
     var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    var pos = (-y * 0.5) + "px 0";
+    var pos = (-y * 0.8) + "px 0";
     for (var i = 0; i < bands.length; i++) bands[i].style.backgroundPosition = pos;
   }
   if (bands.length) {
