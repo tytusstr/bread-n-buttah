@@ -90,6 +90,12 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
+  // Measure the sticky header so menu links land just below it
+  var nav = document.querySelector(".nav");
+  function setNavHeight() { document.documentElement.style.setProperty("--nav-h", nav.offsetHeight + "px"); }
+  setNavHeight();
+  window.addEventListener("resize", setNavHeight);
+
   // Slide the striped separator to the left as the page scrolls.
   // Most browsers do this in CSS (styles.css). This is the fallback for
   // the rest: it eases toward the scroll position every frame so it glides.
