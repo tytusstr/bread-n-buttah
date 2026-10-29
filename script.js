@@ -87,4 +87,19 @@
   }
 
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Slide the striped separator to the left as the page scrolls
+  var bands = document.querySelectorAll(".band");
+  if (bands.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () {
+        var shift = -window.scrollY * 0.5 + "px";
+        bands.forEach(function (band) { band.style.setProperty("--band-shift", shift); });
+        ticking = false;
+      });
+    }, { passive: true });
+  }
 })();

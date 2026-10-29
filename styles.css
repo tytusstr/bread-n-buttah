@@ -52,7 +52,10 @@ section { padding: 5rem 1.25rem; }
 .stripes-yellow {
   background: repeating-linear-gradient(90deg, var(--cream) 0 22px, var(--butter) 22px 40px);
 }
-.band { height: 28px; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+.band {
+  height: 28px; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+  background-position-x: var(--band-shift, 0px); /* slides left as you scroll (script.js) */
+}
 
 /* ---------- nav ---------- */
 .nav {
