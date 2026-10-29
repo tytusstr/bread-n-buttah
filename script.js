@@ -94,7 +94,7 @@
   var strips = document.querySelectorAll(".band-strip");
   var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()");
   if (strips.length && !supportsScrollTimeline) {
-    var STRIPE = 40, SPEED = 0.8, current = null, running = false;
+    var STRIPE = 62, SPEED = 0.8, current = null, running = false;
     var render = function () {
       var target = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED;
       current = current === null ? target : current + (target - current) * 0.25;

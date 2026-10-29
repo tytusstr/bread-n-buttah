@@ -54,14 +54,14 @@ section { padding: 5rem 1.25rem; }
 }
 .band {
   position: relative; overflow: hidden;
-  height: 28px; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold);
+  height: 34px; border-top: 2px solid var(--navy); border-bottom: 2px solid var(--navy);
   background: var(--cream);
 }
-/* the stripes slide left as you scroll (script.js); one stripe wider so it can loop */
+/* the stripes slide left as you scroll (script.js); one stripe (62px) wider so it can loop */
 .band-strip {
-  position: absolute; top: 0; bottom: 0; left: 0; right: -40px;
-  background-image: linear-gradient(90deg, var(--cream) 0 22px, var(--butter) 22px 40px);
-  background-size: 40px 100%;
+  position: absolute; top: 0; bottom: 0; left: 0; right: -62px;
+  background-image: linear-gradient(90deg, var(--cream) 0 34px, var(--apricot) 34px 62px);
+  background-size: 62px 100%;
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
