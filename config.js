@@ -19,8 +19,8 @@ window.BAKERY = {
   // Where people can reach you. Leave "" to hide one.
   email: "zoedstrickland@gmail.com",
   phone: "(541) 280-8776",
-  instagram: "bend_bread_n'_buttah",  // shown as written (no @)
-  instagramLink: "",                  // optional: full profile URL to make it clickable
+  instagram: "bend_bread_n_buttah",   // shown as written (no @)
+  instagramLink: "https://www.instagram.com/bend_bread_n_buttah/",
 
   // Pickup / delivery info (shown in the "How it works" section)
   pickupInfo: "Delivery & pick-up every Saturday. I’ll send you the details when you order!",
