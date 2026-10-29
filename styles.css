@@ -65,6 +65,18 @@ section { padding: 5rem 1.25rem; }
   will-change: transform;
   transform: translate3d(0, 0, 0);
 }
+/* Browsers that can tie animation to scrolling do it natively, perfectly smooth */
+@supports (animation-timeline: scroll()) {
+  .band-strip {
+    right: -2000px;
+    animation: band-slide linear both;
+    animation-timeline: scroll(root);
+  }
+  @keyframes band-slide {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-2000px, 0, 0); }
+  }
+}
 
 /* ---------- nav ---------- */
 .nav {

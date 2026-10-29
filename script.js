@@ -89,23 +89,24 @@
   document.getElementById("year").textContent = new Date().getFullYear();
 
   // Slide the striped separator to the left as the page scrolls.
-  // Moves a pre-drawn strip with a GPU transform (smooth), looping every
-  // 40px stripe and snapping to whole screen pixels (keeps stripes even).
+  // Most browsers do this in CSS (styles.css). This is the fallback for
+  // the rest: it eases toward the scroll position every frame so it glides.
   var strips = document.querySelectorAll(".band-strip");
-  var STRIPE = 40, SPEED = 0.8;
-  function slideBands() {
-    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
-    var dpr = window.devicePixelRatio || 1;
-    var x = Math.round(((y * SPEED) % STRIPE) * dpr) / dpr;
-    for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
-  }
-  if (strips.length) {
-    var ticking = false;
+  var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()");
+  if (strips.length && !supportsScrollTimeline) {
+    var STRIPE = 40, SPEED = 0.8, current = null, running = false;
+    var render = function () {
+      var target = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED;
+      current = current === null ? target : current + (target - current) * 0.25;
+      if (Math.abs(target - current) < 0.1) current = target;
+      var x = current % STRIPE;
+      for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
+      running = current !== target;
+      if (running) requestAnimationFrame(render);
+    };
     window.addEventListener("scroll", function () {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(function () { slideBands(); ticking = false; });
+      if (!running) { running = true; requestAnimationFrame(render); }
     }, { passive: true });
-    slideBands();
+    render();
   }
 })();
