@@ -90,16 +90,18 @@
 
   // Slide the striped separator to the left as the page scrolls
   var bands = document.querySelectorAll(".band");
-  if (bands.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  function slideBands() {
+    var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+    var pos = (-y * 0.5) + "px 0";
+    for (var i = 0; i < bands.length; i++) bands[i].style.backgroundPosition = pos;
+  }
+  if (bands.length) {
     var ticking = false;
     window.addEventListener("scroll", function () {
       if (ticking) return;
       ticking = true;
-      requestAnimationFrame(function () {
-        var shift = -window.scrollY * 0.5 + "px";
-        bands.forEach(function (band) { band.style.setProperty("--band-shift", shift); });
-        ticking = false;
-      });
+      requestAnimationFrame(function () { slideBands(); ticking = false; });
     }, { passive: true });
+    slideBands();
   }
 })();
