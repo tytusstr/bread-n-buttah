@@ -153,7 +153,7 @@ h1 {
 /* when jumping to Shop, the striped separator sits right under the header */
 #menu { scroll-margin-top: 22px; }
 .menu-grid {
-  display: grid; gap: 1.75rem;
+  display: grid; gap: 1.75rem; margin-top: 2.5rem;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 .card {
