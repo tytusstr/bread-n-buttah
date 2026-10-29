@@ -150,8 +150,8 @@ h1 {
 
 /* ---------- menu ---------- */
 .menu { max-width: 1100px; margin: 0 auto; }
-/* when jumping to Shop, show the whole striped separator above it */
-#menu { scroll-margin-top: 50px; }
+/* when jumping to Shop, the striped separator sits right under the header */
+#menu { scroll-margin-top: 22px; }
 .menu-grid {
   display: grid; gap: 1.75rem;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));

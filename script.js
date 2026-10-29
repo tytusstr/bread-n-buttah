@@ -92,7 +92,7 @@
 
   // Measure the sticky header so menu links land just below it
   var nav = document.querySelector(".nav");
-  function setNavHeight() { document.documentElement.style.setProperty("--nav-h", nav.offsetHeight + "px"); }
+  function setNavHeight() { document.documentElement.style.setProperty("--nav-h", Math.ceil(nav.getBoundingClientRect().height) + "px"); }
   setNavHeight();
   window.addEventListener("resize", setNavHeight);
 
