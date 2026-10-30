@@ -147,23 +147,18 @@
   });
 
   // Slide the striped separator to the left as the page scrolls.
-  // Most browsers do this in CSS (styles.css). This is the fallback for
-  // the rest: it eases toward the scroll position every frame so it glides.
+  // Most browsers do this natively in CSS (styles.css); this is the fallback.
   var strips = document.querySelectorAll(".band-strip");
-  var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()") && CSS.supports("animation-range: 0px 6000px");
+  var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()");
   if (strips.length && !supportsScrollTimeline) {
-    var STRIPE = 62, SPEED = 0.5, current = null, running = false;
+    var STRIPE = 62, SPEED = 0.5, ticking = false;
     var render = function () {
-      var target = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED;
-      current = current === null ? target : current + (target - current) * 0.25;
-      if (Math.abs(target - current) < 0.1) current = target;
-      var x = current % STRIPE;
+      var x = ((window.pageYOffset || 0) * SPEED) % STRIPE;
       for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
-      running = current !== target;
-      if (running) requestAnimationFrame(render);
+      ticking = false;
     };
     window.addEventListener("scroll", function () {
-      if (!running) { running = true; requestAnimationFrame(render); }
+      if (!ticking) { ticking = true; requestAnimationFrame(render); }
     }, { passive: true });
     render();
   }
