@@ -99,26 +99,54 @@
   window.addEventListener("resize", setNavHeight);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavHeight);
 
+  // Our own smooth scroll: re-measures the target every frame (so phone
+  // toolbars or late fonts can't leave a gap) and ends exactly on it.
+  function targetY(id) {
+    if (id === "top") return 0;
+    var section = document.getElementById(id);
+    var el = section, extra = 16;
+    if (id === "menu" && section.previousElementSibling && section.previousElementSibling.classList.contains("band")) {
+      el = section.previousElementSibling; // Shop: striped bar flush under the header
+      extra = 0;
+    }
+    var y = window.pageYOffset + el.getBoundingClientRect().top - nav.getBoundingClientRect().bottom - extra;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    return Math.max(0, Math.min(y, max));
+  }
+  function jump(y) { window.scrollTo({ top: y, left: 0, behavior: "instant" }); }
+  var scrollAnim = 0;
+  function scrollToSection(id) {
+    cancelAnimationFrame(scrollAnim);
+    var startY = window.pageYOffset, t0 = null;
+    var dist = Math.abs(targetY(id) - startY);
+    var duration = Math.min(900, Math.max(350, dist * 0.45));
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) duration = 0;
+    function step(now) {
+      if (t0 === null) t0 = now;
+      var t = duration ? Math.min(1, (now - t0) / duration) : 1;
+      var ease = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+      var end = targetY(id);
+      jump(t < 1 ? startY + (end - startY) * ease : end);
+      if (t < 1) scrollAnim = requestAnimationFrame(step);
+      else {
+        // final settle, plus one more after phone toolbars finish resizing
+        scrollAnim = requestAnimationFrame(function () { jump(targetY(id)); });
+        setTimeout(function () {
+          var off = targetY(id) - window.pageYOffset;
+          if (Math.abs(off) > 0.5 && Math.abs(off) < 30) jump(targetY(id));
+        }, 400);
+      }
+    }
+    scrollAnim = requestAnimationFrame(step);
+  }
   document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     link.addEventListener("click", function (e) {
       var id = link.getAttribute("href").slice(1);
-      var section = id && document.getElementById(id);
-      if (!section) return;
+      if (!id || (id !== "top" && !document.getElementById(id))) return;
       e.preventDefault();
-      var navBottom = nav.getBoundingClientRect().bottom;
-      var target, extra = 0;
-      if (id === "menu" && section.previousElementSibling && section.previousElementSibling.classList.contains("band")) {
-        target = section.previousElementSibling;
-      } else if (id === "top") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-        return;
-      } else {
-        target = section;
-        extra = 16;
-      }
-      var top = window.pageYOffset + target.getBoundingClientRect().top - navBottom - extra;
-      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      link.blur();
       if (history.replaceState) history.replaceState(null, "", "#" + id);
+      scrollToSection(id);
     });
   });
 
