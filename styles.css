@@ -221,6 +221,7 @@ h1 {
 .biz-cols p { margin: 0 0 1rem; }
 .biz-cols a { text-decoration: none; overflow-wrap: anywhere; }
 .biz-cols a:hover { text-decoration: underline; }
+.shop-again { text-align: center; margin-top: 3rem; }
 
 /* ---------- footer ---------- */
 .footer {
