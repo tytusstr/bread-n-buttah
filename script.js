@@ -90,61 +90,14 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Menu links: scroll so the section lands exactly under the sticky header.
-  // Measured at tap time, so late-loading fonts can't throw it off. For Shop,
-  // the striped separator sits flush under the header.
+  // Keep --nav-h equal to the sticky header's exact height (it can change
+  // when fonts load or the screen rotates) so menu links land right under it.
   var nav = document.querySelector(".nav");
-  function setNavHeight() { document.documentElement.style.setProperty("--nav-h", Math.ceil(nav.getBoundingClientRect().height) + "px"); }
+  function setNavHeight() { document.documentElement.style.setProperty("--nav-h", nav.getBoundingClientRect().height + "px"); }
   setNavHeight();
-  window.addEventListener("resize", setNavHeight);
+  if (window.ResizeObserver) new ResizeObserver(setNavHeight).observe(nav);
+  else window.addEventListener("resize", setNavHeight);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavHeight);
-
-  // Our own smooth scroll: starts moving immediately and eases to a stop
-  // exactly on the target, then re-checks once phone toolbars settle.
-  function targetY(id) {
-    if (id === "top") return 0;
-    var section = document.getElementById(id);
-    var el = section, extra = 16;
-    if (id === "menu" && section.previousElementSibling && section.previousElementSibling.classList.contains("band")) {
-      el = section.previousElementSibling; // Shop: striped bar flush under the header
-      extra = 0;
-    }
-    var y = window.pageYOffset + el.getBoundingClientRect().top - nav.getBoundingClientRect().bottom - extra;
-    var max = document.documentElement.scrollHeight - window.innerHeight;
-    return Math.max(0, Math.min(y, max));
-  }
-  function jump(y) { window.scrollTo(0, y); }
-  var scrollAnim = 0;
-  function scrollToSection(id) {
-    cancelAnimationFrame(scrollAnim);
-    var startY = window.pageYOffset, endY = targetY(id), t0 = null;
-    var duration = Math.min(800, Math.max(300, Math.abs(endY - startY) * 0.4));
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) duration = 0;
-    function step(now) {
-      if (t0 === null) t0 = now;
-      var t = duration ? Math.min(1, (now - t0) / duration) : 1;
-      var ease = 1 - Math.pow(1 - t, 3); // ease-out: no slow, jittery start
-      if (t < 1) {
-        jump(startY + (endY - startY) * ease);
-        scrollAnim = requestAnimationFrame(step);
-      } else {
-        jump(targetY(id));
-        setTimeout(function () {
-          var off = targetY(id) - window.pageYOffset;
-          if (Math.abs(off) > 0.5 && Math.abs(off) < 30) jump(targetY(id));
-        }, 400);
-      }
-    }
-    scrollAnim = requestAnimationFrame(step);
-  }
-  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-    link.addEventListener("click", function (e) {
-      var id = link.getAttribute("href").slice(1);
-      if (!id || (id !== "top" && !document.getElementById(id))) return;
-      e.preventDefault();
-      scrollToSection(id);
-    });
-  });
 
   // Slide the striped separator to the left as the page scrolls.
   // Most browsers do this natively in CSS (styles.css); this is the fallback.
