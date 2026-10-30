@@ -31,27 +31,27 @@ window.BAKERY = {
   paypalMe: "",                       // e.g. "zoestrickland" → paypal.me/zoestrickland
 
   // What you sell. Add, remove, or edit as many as you like.
-  // icon can be "bread", "sticker", or "shirt".
+  // icon can be "bread", "butter", "bottle", "sticker", or "shirt".
   menu: [
     {
-      name: "100% Whole Wheat Bread",
-      description: "A hearty loaf made with 100% whole wheat flour. Great for sandwiches, toast, and lots of butter.",
+      name: "Sourdough",
+      description: "Naturally leavened sourdough, made from scratch in small batches with care and love.",
       price: "",                      // ← set your price, e.g. "$10" (blank = hidden)
       icon: "bread",
       payLink: ""                     // ← paste a Stripe/Square/PayPal link here
     },
     {
-      name: "Bread n’ Buttah Sticker",
-      description: "Show some love for your local baker! Perfect for water bottles and laptops.",
+      name: "Buttah",
+      description: "Homemade butter, made from scratch in small batches. The perfect match for a fresh loaf.",
       price: "",
-      icon: "sticker",
+      icon: "butter",
       payLink: ""
     },
     {
-      name: "Bread n’ Buttah Shirt",
-      description: "A comfy Bread n’ Buttah t-shirt. Ask about sizes when you order!",
+      name: "Kombucha",
+      description: "Homemade kombucha, brewed in small batches.",
       price: "",
-      icon: "shirt",
+      icon: "bottle",
       payLink: ""
     }
   ]
