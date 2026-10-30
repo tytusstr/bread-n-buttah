@@ -104,7 +104,7 @@
   var strips = document.querySelectorAll(".band-strip");
   var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()");
   if (strips.length && !supportsScrollTimeline) {
-    var STRIPE = 62, SPEED = 0.5, ticking = false;
+    var STRIPE = 62, SPEED = 0.3, ticking = false;
     var render = function () {
       var x = ((window.pageYOffset || 0) * SPEED) % STRIPE;
       for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
@@ -123,7 +123,7 @@
   // identical). Once the page settles, the hold is removed. The stripe pattern
   // repeats every 62px, so each switch is lined up to look exactly the same.
   if (strips.length && supportsScrollTimeline && CSS.supports("animation-range: 0px 6000px")) {
-    var RANGE = 6000, RATE = 0.5, HOLD = 40, PERIOD = 62;
+    var RANGE = 6000, RATE = 0.3, HOLD = 40, PERIOD = 62;
     var band = document.querySelector(".band");
     var styleEl = document.createElement("style");
     document.head.appendChild(styleEl);

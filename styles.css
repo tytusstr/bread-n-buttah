@@ -85,7 +85,7 @@ section { padding: 5rem 1.25rem; }
   }
   @keyframes band-slide {
     from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(-3000px, 0, 0); }
+    to { transform: translate3d(-1800px, 0, 0); } /* 0.3px sideways per 1px scrolled */
   }
 }
 
