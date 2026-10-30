@@ -1,13 +1,14 @@
 :root {
-  --cream: #f8f2e2;
-  --cream-2: #f1e8cf;
-  --butter: #f2d46e;
-  --butter-soft: #f7e39a;
-  --apricot: #e9a46a;
-  --navy: #33609e;
-  --burgundy: #5c1a22;
-  --gold: #a88a2c;
-  --ink: #3b2a24;
+  /* beige with subtle hints of brown */
+  --cream: #f6efe4;
+  --cream-2: #ebe1d1;
+  --sand: #e2d4bf;
+  --sand-soft: #eee4d4;
+  --tan: #d4bfa2;
+  --brown: #6f5440;
+  --espresso: #4a3628;
+  --mocha: #9a7d62;
+  --ink: #3b2c22;
   --radius: 18px;
 }
 
@@ -31,9 +32,9 @@ body {
   line-height: 1.6;
 }
 
-h1, h2, h3 { font-family: "Playfair Display", Georgia, serif; color: var(--navy); line-height: 1.1; margin: 0 0 .5em; }
+h1, h2, h3 { font-family: "Playfair Display", Georgia, serif; color: var(--brown); line-height: 1.1; margin: 0 0 .5em; }
 h2 { font-size: clamp(2.1rem, 5vw, 3rem); text-align: center; font-weight: 700; }
-a { color: var(--burgundy); }
+a { color: var(--espresso); }
 
 section { padding: 5rem 1.25rem; }
 .section-sub { text-align: center; max-width: 560px; margin: 0 auto 2.5rem; }
@@ -46,27 +47,27 @@ section { padding: 5rem 1.25rem; }
   font-size: .85rem;
   color: var(--ink);
 }
-.eyebrow { text-align: center; margin: 0 0 .5rem; color: var(--gold); }
-.script, .script-heading { font-family: "Pinyon Script", cursive; color: var(--burgundy); font-weight: 400; }
+.eyebrow { text-align: center; margin: 0 0 .5rem; color: var(--mocha); }
+.script, .script-heading { font-family: "Pinyon Script", cursive; color: var(--espresso); font-weight: 400; }
 .script { font-size: 1.5em; line-height: 1; white-space: nowrap; }
 .script-heading { font-size: clamp(2.6rem, 7vw, 3.8rem); }
 
 /* ---------- stripes ---------- */
 .stripes-orange {
-  background: repeating-linear-gradient(90deg, var(--cream) 0 34px, var(--apricot) 34px 62px);
+  background: repeating-linear-gradient(90deg, var(--cream) 0 34px, var(--tan) 34px 62px);
 }
 .stripes-yellow {
-  background: repeating-linear-gradient(90deg, var(--cream) 0 22px, var(--butter) 22px 40px);
+  background: repeating-linear-gradient(90deg, var(--cream) 0 22px, var(--sand) 22px 40px);
 }
 .band {
   position: relative; overflow: hidden;
-  height: 34px; border-top: 2px solid var(--navy); border-bottom: 2px solid var(--navy);
+  height: 34px; border-top: 2px solid var(--brown); border-bottom: 2px solid var(--brown);
   background: var(--cream);
 }
 /* the stripes slide left as you scroll (script.js); one stripe (62px) wider so it can loop */
 .band-strip {
   position: absolute; top: 0; bottom: 0; left: 0; right: -62px;
-  background-image: linear-gradient(90deg, var(--cream) 0 34px, var(--apricot) 34px 62px);
+  background-image: linear-gradient(90deg, var(--cream) 0 34px, var(--tan) 34px 62px);
   background-size: 62px 100%;
   will-change: transform;
   transform: translate3d(0, 0, 0);
@@ -96,26 +97,26 @@ section { padding: 5rem 1.25rem; }
   background: var(--cream);
   border-bottom: 1px solid var(--cream-2);
 }
-.logo { font-family: "Playfair Display", serif; font-weight: 700; font-size: 1.4rem; color: var(--navy); text-decoration: none; }
-.logo span { font-family: "Pinyon Script", cursive; font-weight: 400; color: var(--burgundy); }
+.logo { font-family: "Playfair Display", serif; font-weight: 700; font-size: 1.4rem; color: var(--brown); text-decoration: none; }
+.logo span { font-family: "Pinyon Script", cursive; font-weight: 400; color: var(--espresso); }
 .nav nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
 .nav nav a {
   font-family: "Jost", sans-serif; text-transform: uppercase; letter-spacing: .12em; font-size: .78rem;
   text-decoration: none; color: var(--ink); padding: .3rem 0; border-bottom: 1px solid transparent;
 }
-.nav nav a:hover { border-bottom-color: var(--gold); }
+.nav nav a:hover { border-bottom-color: var(--mocha); }
 
 /* ---------- buttons ---------- */
 .btn {
   display: inline-block; text-decoration: none; text-align: center; cursor: pointer;
   font-family: "Jost", sans-serif; text-transform: uppercase; letter-spacing: .14em; font-size: .82rem;
-  padding: .85rem 1.8rem; border-radius: 999px; border: 1.5px solid var(--navy);
+  padding: .85rem 1.8rem; border-radius: 999px; border: 1.5px solid var(--brown);
   transition: background .2s, color .2s;
 }
-.btn-solid { background: var(--navy); color: var(--cream); }
-.btn-solid:hover { background: #274d82; }
-.btn-line { background: transparent; color: var(--navy); }
-.btn-line:hover { background: var(--navy); color: var(--cream); }
+.btn-solid { background: var(--brown); color: var(--cream); }
+.btn-solid:hover { background: #5c4434; }
+.btn-line { background: transparent; color: var(--brown); }
+.btn-line:hover { background: var(--brown); color: var(--cream); }
 .btn.disabled { opacity: .5; cursor: default; }
 
 /* ---------- hero ---------- */
@@ -127,7 +128,7 @@ section { padding: 5rem 1.25rem; }
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   text-align: center; padding: 14% 12% 16%;
 }
-.label-inner .caps { margin: 0; font-size: clamp(.8rem, 2.6vw, 1rem); line-height: 1.35; color: #4a4a55; }
+.label-inner .caps { margin: 0; font-size: clamp(.8rem, 2.6vw, 1rem); line-height: 1.35; color: var(--ink); }
 h1 {
   font-family: "Playfair Display", serif; font-weight: 800;
   font-size: clamp(3.4rem, 15vw, 5.6rem);
@@ -141,11 +142,11 @@ h1 {
 
 .monogram {
   position: relative; width: 120px; height: 110px; margin: 0 auto 1.5rem;
-  border: 1.5px solid var(--gold); border-radius: 50% / 46%;
-  color: var(--gold);
+  border: 1.5px solid var(--mocha); border-radius: 50% / 46%;
+  color: var(--mocha);
 }
 .monogram::before {
-  content: ""; position: absolute; inset: 6px; border: 1px solid var(--gold); border-radius: inherit; opacity: .6;
+  content: ""; position: absolute; inset: 6px; border: 1px solid var(--mocha); border-radius: inherit; opacity: .6;
 }
 .m-serif { position: absolute; left: 28px; top: 8px; font-family: "Playfair Display", serif; font-size: 62px; font-weight: 500; line-height: 1; }
 .m-script { position: absolute; left: 50px; top: 32px; font-family: "Pinyon Script", cursive; font-size: 62px; line-height: 1; }
@@ -164,7 +165,7 @@ h1 {
   --arrow-gap: calc(var(--arrow-h) * .3);
   display: block; width: calc(var(--arrow-h) * .58); height: var(--arrow-h);
   margin: var(--arrow-gap) auto calc(-1 * (var(--arrow-h) + var(--arrow-gap)));
-  fill: none; stroke: var(--navy); stroke-width: 5.5; stroke-linecap: butt; stroke-linejoin: miter;
+  fill: none; stroke: var(--brown); stroke-width: 5.5; stroke-linecap: butt; stroke-linejoin: miter;
 }
 .menu-grid { margin-top: calc(5rem + 3px); }
 /* when jumping to Shop, the striped separator (34px tall) sits flush under the header */
@@ -175,8 +176,8 @@ h1 {
 }
 .card {
   background: var(--cream);
-  border: 1.5px solid var(--burgundy);
-  outline: 1px solid var(--burgundy); outline-offset: 5px;
+  border: 1.5px solid var(--espresso);
+  outline: 1px solid var(--espresso); outline-offset: 5px;
   border-radius: var(--radius);
   padding: 2rem 1.6rem 1.8rem;
   margin: 6px;
@@ -185,11 +186,11 @@ h1 {
 .card-icon {
   width: 84px; height: 84px; margin-bottom: 1rem;
   display: grid; place-items: center;
-  background: var(--butter-soft); border-radius: 50%;
+  background: var(--sand-soft); border-radius: 50%;
 }
-.card-icon svg { width: 52px; height: 52px; fill: none; stroke: var(--gold); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.card-icon svg { width: 52px; height: 52px; fill: none; stroke: var(--mocha); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .card h3 { font-size: 1.45rem; margin: 0 0 .3rem; }
-.price { font-family: "Jost", sans-serif; letter-spacing: .1em; color: var(--burgundy); margin: 0 0 .3rem; }
+.price { font-family: "Jost", sans-serif; letter-spacing: .1em; color: var(--espresso); margin: 0 0 .3rem; }
 .desc { margin: .2rem 0 1.4rem; flex: 1; }
 .pay-extras { text-align: center; margin-top: 2.5rem; }
 
@@ -202,30 +203,30 @@ h1 {
 .steps li { text-align: center; padding: 0 1rem; }
 .step-num {
   display: inline-grid; place-items: center; width: 56px; height: 56px; margin-bottom: 1rem;
-  border: 1.5px solid var(--gold); border-radius: 50%;
-  font-family: "Playfair Display", serif; font-size: 1.2rem; color: var(--gold);
+  border: 1.5px solid var(--mocha); border-radius: 50%;
+  font-family: "Playfair Display", serif; font-size: 1.2rem; color: var(--mocha);
 }
 .steps h3 { font-size: 1.35rem; }
 .steps p { margin: 0; }
 
 /* ---------- about ---------- */
-.about { padding: 4.5rem 1.25rem; border-top: 2px solid var(--gold); border-bottom: 2px solid var(--gold); }
+.about { padding: 4.5rem 1.25rem; border-top: 2px solid var(--mocha); border-bottom: 2px solid var(--mocha); }
 .about-card {
   max-width: 720px; margin: 0 auto; text-align: center;
-  background: var(--butter-soft);
-  border: 1.5px solid var(--burgundy);
-  outline: 1px solid var(--burgundy); outline-offset: -9px;
+  background: var(--sand-soft);
+  border: 1.5px solid var(--espresso);
+  outline: 1px solid var(--espresso); outline-offset: -9px;
   border-radius: 28px; padding: 3rem 2.5rem;
   box-shadow: 0 10px 24px rgba(80, 50, 20, .15);
 }
-.about-card .eyebrow { color: var(--burgundy); }
+.about-card .eyebrow { color: var(--espresso); }
 .about-card .script-heading { margin-bottom: .3em; }
 
 /* ---------- contact (business card) ---------- */
 .biz-card {
   max-width: 640px; margin: 0 auto;
-  background: #fffaf0;
-  border: 1.5px solid var(--burgundy);
+  background: #fbf7f0;
+  border: 1.5px solid var(--espresso);
   border-radius: 28px;
   padding: 2.5rem 3rem 2rem;
   box-shadow: 0 12px 30px rgba(80, 50, 20, .12);
@@ -240,11 +241,11 @@ h1 {
 /* ---------- footer ---------- */
 .footer {
   text-align: center; padding: 3rem 1rem 2.5rem;
-  background: var(--navy); color: var(--cream);
+  background: var(--brown); color: var(--cream);
 }
-.footer .monogram { color: var(--butter); border-color: var(--butter); }
-.footer .monogram::before { border-color: var(--butter); }
-.footer .caps { color: var(--butter-soft); margin: 0 0 .4rem; }
+.footer .monogram { color: var(--sand); border-color: var(--sand); }
+.footer .monogram::before { border-color: var(--sand); }
+.footer .caps { color: var(--sand-soft); margin: 0 0 .4rem; }
 .footer .copy { margin: 0; font-size: 1rem; }
 .footer .credit { margin: .6rem 0 0; font-size: .85rem; opacity: .7; }
 
