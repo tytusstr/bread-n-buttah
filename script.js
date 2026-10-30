@@ -90,11 +90,37 @@
 
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  // Measure the sticky header so menu links land just below it
+  // Menu links: scroll so the section lands exactly under the sticky header.
+  // Measured at tap time, so late-loading fonts can't throw it off. For Shop,
+  // the striped separator sits flush under the header.
   var nav = document.querySelector(".nav");
   function setNavHeight() { document.documentElement.style.setProperty("--nav-h", Math.ceil(nav.getBoundingClientRect().height) + "px"); }
   setNavHeight();
   window.addEventListener("resize", setNavHeight);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavHeight);
+
+  document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      var id = link.getAttribute("href").slice(1);
+      var section = id && document.getElementById(id);
+      if (!section) return;
+      e.preventDefault();
+      var navBottom = nav.getBoundingClientRect().bottom;
+      var target, extra = 0;
+      if (id === "menu" && section.previousElementSibling && section.previousElementSibling.classList.contains("band")) {
+        target = section.previousElementSibling;
+      } else if (id === "top") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        return;
+      } else {
+        target = section;
+        extra = 16;
+      }
+      var top = window.pageYOffset + target.getBoundingClientRect().top - navBottom - extra;
+      window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+      if (history.replaceState) history.replaceState(null, "", "#" + id);
+    });
+  });
 
   // Slide the striped separator to the left as the page scrolls.
   // Most browsers do this in CSS (styles.css). This is the fallback for
