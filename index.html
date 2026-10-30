@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700;800&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Jost:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=37">
+  <link rel="stylesheet" href="styles.css?v=38">
 </head>
 <body>
 
@@ -56,6 +56,20 @@
         <!-- filled in by script.js from config.js -->
       </div>
       <p class="pay-extras" id="pay-extras" hidden></p>
+      <p class="secure-note" id="secure-note" hidden>Secure checkout. Card details are handled by the payment provider, never stored on this site.</p>
+
+      <!-- "Notify me" email sign-up (settings in config.js) -->
+      <div class="signup" id="signup" hidden>
+        <h3 id="signup-title">Ordering opens soon!</h3>
+        <p id="signup-text"></p>
+        <form id="signup-form" novalidate>
+          <label class="sr-only" for="signup-email">Your email</label>
+          <input type="email" id="signup-email" name="email" placeholder="your@email.com" autocomplete="email" required>
+          <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+          <button class="btn btn-solid" type="submit">Notify me</button>
+        </form>
+        <p class="signup-msg" id="signup-msg" role="status" aria-live="polite"></p>
+      </div>
     </section>
 
     <!-- HOW IT WORKS -->
@@ -121,7 +135,7 @@
     <p class="credit">Website by Tytus Strickland</p>
   </footer>
 
-  <script src="config.js?v=37"></script>
-  <script src="script.js?v=37"></script>
+  <script src="config.js?v=38"></script>
+  <script src="script.js?v=38"></script>
 </body>
 </html>

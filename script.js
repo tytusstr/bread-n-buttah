@@ -68,6 +68,50 @@
     p.hidden = false;
   }
 
+  // Note under the menu once any item takes payment online
+  if (menu.some(function (item) { return item.payLink; })) document.getElementById("secure-note").hidden = false;
+
+  // "Notify me" email sign-up
+  var su = b.signup || {};
+  if (su.show && su.sendTo) {
+    var box = document.getElementById("signup");
+    var form = document.getElementById("signup-form");
+    var input = document.getElementById("signup-email");
+    var msg = document.getElementById("signup-msg");
+    if (su.title) document.getElementById("signup-title").textContent = su.title;
+    document.getElementById("signup-text").textContent = su.text || "";
+    box.hidden = false;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var email = input.value.trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Please enter a valid email address."; input.focus(); return; }
+      var button = form.querySelector("button");
+      button.disabled = true;
+      msg.textContent = "Sending…";
+      fetch("https://formsubmit.co/ajax/" + encodeURIComponent(su.sendTo), {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "Accept": "application/json" },
+        body: JSON.stringify({
+          email: email,
+          _subject: "New Bread n’ Buttah sign-up",
+          message: email + " wants to be notified when ordering opens.",
+          _template: "table",
+          _honey: form.elements._honey.value
+        })
+      }).then(function (r) { return r.json(); }).then(function (data) {
+        if (String(data.success) !== "true") throw new Error(data.message || "failed");
+        form.hidden = true;
+        msg.textContent = "Thank you! You’re on the list. I’ll email you when ordering opens. 💛";
+      }).catch(function () {
+        button.disabled = false;
+        msg.textContent = "";
+        msg.appendChild(document.createTextNode("Sorry, that didn’t go through. You can also "));
+        msg.appendChild(el("a", { href: "mailto:" + su.sendTo + "?subject=" + encodeURIComponent("Notify me when ordering opens") }, "email me"));
+        msg.appendChild(document.createTextNode(" and I’ll add you."));
+      });
+    });
+  }
+
   // Contact lines (business-card style)
   var lines = document.getElementById("contact-lines");
   if (b.phone) {
