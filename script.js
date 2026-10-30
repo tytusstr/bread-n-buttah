@@ -115,4 +115,40 @@
     }, { passive: true });
     render();
   }
+
+  // Safari briefly redraws scroll-linked animations a couple of frames late
+  // when a smooth scroll stops, which made the stripes twitch on landing at
+  // Shop. So the stripes hold still for a short stretch around that exact
+  // landing spot: a late frame then looks identical and nothing twitches.
+  var RANGE = 6000, SPEED_N = 0.5, HOLD = 40;
+  if (strips.length && supportsScrollTimeline && CSS.supports("animation-range: 0px 6000px")) {
+    var band = document.querySelector(".band");
+    var styleEl = document.createElement("style");
+    document.head.appendChild(styleEl);
+    var lastKey = "";
+    var buildKeyframes = function () {
+      var land = window.pageYOffset + band.getBoundingClientRect().top - nav.getBoundingClientRect().height;
+      var a = Math.max(0, land - HOLD), z = Math.min(RANGE, land + HOLD);
+      var key = Math.round(a) + "," + Math.round(z);
+      if (key === lastKey) return;
+      lastKey = key;
+      var held = -a * SPEED_N, end = held - (RANGE - z) * SPEED_N;
+      var pct = function (y) { return (y / RANGE * 100).toFixed(4) + "%"; };
+      styleEl.textContent =
+        "@keyframes band-slide-hold {" +
+        "0% { transform: translate3d(0,0,0); }" +
+        pct(a) + " { transform: translate3d(" + held + "px,0,0); }" +
+        pct(z) + " { transform: translate3d(" + held + "px,0,0); }" +
+        "100% { transform: translate3d(" + end + "px,0,0); } }" +
+        ".band-strip { animation-name: band-slide-hold; }";
+    };
+    buildKeyframes();
+    if (window.ResizeObserver) {
+      var ro = new ResizeObserver(buildKeyframes);
+      ro.observe(nav);
+      ro.observe(document.body);
+    }
+    window.addEventListener("resize", buildKeyframes);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(buildKeyframes);
+  }
 })();
