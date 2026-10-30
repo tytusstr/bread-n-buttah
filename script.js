@@ -99,32 +99,30 @@
   else window.addEventListener("resize", setNavHeight);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavHeight);
 
-  // Slide the striped separator left whenever the page scrolls, whichever
-  // direction: it follows the total distance scrolled, so it never reverses.
-  // The stripes chase that distance with a smooth spring, so they build up
-  // speed over about half a second, catch up, match the scroll, and glide to
-  // a stop instead of jumping into motion.
+  // Slide the striped separator as the page scrolls: left when scrolling
+  // down, right when scrolling up. The stripes chase the scroll position with
+  // a quick spring, so they build up speed, catch up, match the scroll, and
+  // glide to a stop (or turn around) instead of jumping.
   var strips = document.querySelectorAll(".band-strip");
   if (strips.length) {
     var STRIPE = 62, RATE = 0.4, OMEGA = 22, DAMP = 0.7; // spring: ~0.15s to catch up, slight speed overshoot
     var lastY = window.pageYOffset, target = 0, pos = 0, vel = 0, lastT = 0, running = false;
     var draw = function () {
       var dpr = window.devicePixelRatio || 1;
-      var x = Math.round(((pos * RATE) % STRIPE) * dpr) / dpr; // whole screen pixels keep stripes even
+      var x = Math.round(((((pos * RATE) % STRIPE) + STRIPE) % STRIPE) * dpr) / dpr; // whole screen pixels keep stripes even
       for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
     };
     var step = function (now) {
       var dt = lastT ? Math.min(0.05, (now - lastT) / 1000) : 1 / 60;
       lastT = now;
       var y = window.pageYOffset;
-      target += Math.abs(y - lastY);
+      target += y - lastY;
       lastY = y;
-      // springy chase toward the target (briefly faster to catch up), never moving backward
+      // springy chase toward the target (briefly faster to catch up)
       vel += (OMEGA * OMEGA * (target - pos) - 2 * DAMP * OMEGA * vel) * dt;
-      if (vel < 0) vel = 0;
-      pos = Math.min(target, pos + vel * dt);
+      pos += vel * dt;
       draw();
-      if (target - pos > 0.05 || vel > 0.5) requestAnimationFrame(step);
+      if (Math.abs(target - pos) > 0.05 || Math.abs(vel) > 0.5) requestAnimationFrame(step);
       else { running = false; lastT = 0; vel = 0; }
     };
     window.addEventListener("scroll", function () {
