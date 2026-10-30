@@ -1,5 +1,7 @@
 # 🍞 Bread n’ Buttah
 
+**🌐 Visit the site: [breadnbuttah.net](http://breadnbuttah.net)**
+
 A cute little website for **Bread n’ Buttah**, a local one-person bakery run by **Zoe Strickland**.
 It's plain HTML/CSS/JS — no build step — so it runs for free on GitHub Pages.
 
