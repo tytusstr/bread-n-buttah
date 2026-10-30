@@ -205,7 +205,9 @@ h1 {
   box-shadow: 0 10px 24px rgba(80, 50, 20, .15);
 }
 .about-card .eyebrow { color: var(--espresso); }
-.about-card .script-heading { margin-bottom: .3em; }
+.about-card .script-heading { margin-bottom: .1em; }
+.about-welcome { font-family: "Playfair Display", Georgia, serif; font-weight: 700; font-size: 1.35rem; color: var(--brown); margin-top: 0; }
+.about-signoff { font-family: "Pinyon Script", cursive; font-size: 2rem; line-height: 1.2; color: var(--espresso); margin: 1.2rem 0 0; }
 
 /* ---------- contact (business card) ---------- */
 .biz-card {
