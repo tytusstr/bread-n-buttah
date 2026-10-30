@@ -99,8 +99,8 @@
   window.addEventListener("resize", setNavHeight);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavHeight);
 
-  // Our own smooth scroll: re-measures the target every frame (so phone
-  // toolbars or late fonts can't leave a gap) and ends exactly on it.
+  // Our own smooth scroll: starts moving immediately and eases to a stop
+  // exactly on the target, then re-checks once phone toolbars settle.
   function targetY(id) {
     if (id === "top") return 0;
     var section = document.getElementById(id);
@@ -113,24 +113,22 @@
     var max = document.documentElement.scrollHeight - window.innerHeight;
     return Math.max(0, Math.min(y, max));
   }
-  function jump(y) { window.scrollTo({ top: y, left: 0, behavior: "instant" }); }
+  function jump(y) { window.scrollTo(0, y); }
   var scrollAnim = 0;
   function scrollToSection(id) {
     cancelAnimationFrame(scrollAnim);
-    var startY = window.pageYOffset, t0 = null;
-    var dist = Math.abs(targetY(id) - startY);
-    var duration = Math.min(900, Math.max(350, dist * 0.45));
+    var startY = window.pageYOffset, endY = targetY(id), t0 = null;
+    var duration = Math.min(800, Math.max(300, Math.abs(endY - startY) * 0.4));
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) duration = 0;
     function step(now) {
       if (t0 === null) t0 = now;
       var t = duration ? Math.min(1, (now - t0) / duration) : 1;
-      var ease = t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-      var end = targetY(id);
-      jump(t < 1 ? startY + (end - startY) * ease : end);
-      if (t < 1) scrollAnim = requestAnimationFrame(step);
-      else {
-        // final settle, plus one more after phone toolbars finish resizing
-        scrollAnim = requestAnimationFrame(function () { jump(targetY(id)); });
+      var ease = 1 - Math.pow(1 - t, 3); // ease-out: no slow, jittery start
+      if (t < 1) {
+        jump(startY + (endY - startY) * ease);
+        scrollAnim = requestAnimationFrame(step);
+      } else {
+        jump(targetY(id));
         setTimeout(function () {
           var off = targetY(id) - window.pageYOffset;
           if (Math.abs(off) > 0.5 && Math.abs(off) < 30) jump(targetY(id));
@@ -144,8 +142,6 @@
       var id = link.getAttribute("href").slice(1);
       if (!id || (id !== "top" && !document.getElementById(id))) return;
       e.preventDefault();
-      link.blur();
-      if (history.replaceState) history.replaceState(null, "", "#" + id);
       scrollToSection(id);
     });
   });
