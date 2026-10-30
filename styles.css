@@ -152,7 +152,11 @@ h1 {
 .menu { max-width: 1100px; margin: 0 auto; }
 /* "What's for sale?" sits evenly between the striped bar and the cards */
 .menu h2 { margin-bottom: 0; }
-.menu-grid { margin-top: calc(5rem + 3px); }
+.down-arrow {
+  display: block; width: 22px; height: 40px; margin: 1.25rem auto 0;
+  fill: none; stroke: var(--navy); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.menu-grid { margin-top: calc(5rem + 6px); }
 /* when jumping to Shop, the striped separator sits right under the header */
 #menu { scroll-margin-top: 22px; }
 .menu-grid {
@@ -240,7 +244,7 @@ h1 {
 @media (max-width: 760px) {
   body { font-size: 1.12rem; }
   section { padding: 3.5rem 1rem; }
-  .menu-grid { margin-top: calc(3.5rem + 2px); }
+  .menu-grid { margin-top: calc(3.5rem + 3px); }
   .nav { justify-content: center; }
   .steps { grid-template-columns: 1fr; gap: 2.25rem; }
   .about-card { padding: 2.5rem 1.5rem; }
