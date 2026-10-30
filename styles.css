@@ -122,7 +122,7 @@ h1 {
 }
 
 /* ---------- intro & monogram ---------- */
-.intro { text-align: center; max-width: 680px; margin: 0 auto; padding-bottom: 52px; }
+.intro { text-align: center; max-width: 680px; margin: 0 auto; }
 .intro-text { font-size: clamp(1.3rem, 3vw, 1.6rem); margin: 0; }
 
 .monogram {
@@ -140,8 +140,7 @@ h1 {
 .monogram.small .m-script { left: 32px; top: 20px; font-size: 38px; }
 
 /* ---------- menu ---------- */
-/* the striped bar has about the same space around it as above the Shop now button */
-.menu { max-width: 1100px; margin: 0 auto; padding-top: 44px; }
+.menu { max-width: 1100px; margin: 0 auto; }
 /* "What's for sale?" sits evenly between the striped bar and the cards */
 .menu h2 { margin-bottom: 0; }
 /* arrow matches the heading's size and stroke weight, and takes up no space
@@ -241,8 +240,6 @@ h1 {
 @media (max-width: 760px) {
   body { font-size: 1.12rem; }
   section { padding: 3.5rem 1rem; }
-  .intro { padding-bottom: 40px; }
-  .menu { padding-top: 35px; }
   .menu-grid { margin-top: calc(3.5rem + 2px); }
   .nav { justify-content: center; }
   .steps { grid-template-columns: 1fr; gap: 2.25rem; }
