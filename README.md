@@ -57,6 +57,18 @@ Fill in `venmo`, `cashapp`, or `paypalMe` in `config.js` and a "You can also pay
 
 > 🔒 Never put passwords or secret API keys in this repo — it's public. Payment *links* are safe to share; that's what they're for.
 
+## 📋 Collecting sign-ups in a Google Sheet
+
+The "Ordering opens soon!" box collects emails. To have them land in a spreadsheet:
+
+1. Create a new Google Sheet (e.g. "Bread n' Buttah sign-ups") with the Google account that should own the list.
+2. In the sheet, open **Extensions → Apps Script**.
+3. Delete what's there, paste in everything from `google-sheet-signup.gs` (in this repo), and click **Save**.
+4. Click **Deploy → New deployment**, choose type **Web app**, set **Execute as: Me** and **Who has access: Anyone**, then **Deploy**. Approve the permission prompt (Google may warn that the app isn't verified: click *Advanced → Go to project*; it's your own script).
+5. Copy the **Web app URL** and paste it into `sheetUrl` under `signup` in `config.js`.
+
+Each sign-up then adds a row with the date and email. Until `sheetUrl` is set, sign-ups are emailed to `sendTo` instead.
+
 ## 🗂 Files
 
 | File | What it is |
@@ -65,5 +77,6 @@ Fill in `venmo`, `cashapp`, or `paypalMe` in `config.js` and a "You can also pay
 | `index.html` | Page layout and wording |
 | `styles.css` | Colors, fonts, look & feel |
 | `script.js` | Builds the menu from `config.js` (no need to touch) |
+| `google-sheet-signup.gs` | Script that saves sign-ups to a Google Sheet (see above) |
 
 Made with flour, butter & love by Zoe Strickland. 💛

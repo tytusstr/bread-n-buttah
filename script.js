@@ -73,7 +73,7 @@
 
   // "Notify me" email sign-up
   var su = b.signup || {};
-  if (su.show && su.sendTo) {
+  if (su.show && (su.sheetUrl || su.sendTo)) {
     var box = document.getElementById("signup");
     var form = document.getElementById("signup-form");
     var input = document.getElementById("signup-email");
@@ -88,17 +88,24 @@
       var button = form.querySelector("button");
       button.disabled = true;
       msg.textContent = "Sending…";
-      fetch("https://formsubmit.co/ajax/" + encodeURIComponent(su.sendTo), {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          _subject: "New Bread n’ Buttah sign-up",
-          message: email + " wants to be notified when ordering opens.",
-          _template: "table",
-          _honey: form.elements._honey.value
-        })
-      }).then(function (r) { return r.json(); }).then(function (data) {
+      var honey = form.elements._honey.value;
+      var send = su.sheetUrl
+        // Google Sheet (Apps Script web app): it can't send a readable reply
+        // across sites, so a request that reaches it counts as success.
+        ? fetch(su.sheetUrl, { method: "POST", mode: "no-cors", body: new URLSearchParams({ email: email, _honey: honey }) })
+            .then(function () { return { success: "true" }; })
+        : fetch("https://formsubmit.co/ajax/" + encodeURIComponent(su.sendTo), {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+              email: email,
+              _subject: "New Bread n’ Buttah sign-up",
+              message: email + " wants to be notified when ordering opens.",
+              _template: "table",
+              _honey: honey
+            })
+          }).then(function (r) { return r.json(); });
+      send.then(function (data) {
         if (String(data.success) !== "true") throw new Error(data.message || "failed");
         form.hidden = true;
         msg.textContent = "Thank you! You’re on the list. I’ll email you when ordering opens. 💛";
@@ -106,7 +113,7 @@
         button.disabled = false;
         msg.textContent = "";
         msg.appendChild(document.createTextNode("Sorry, that didn’t go through. You can also "));
-        msg.appendChild(el("a", { href: "mailto:" + su.sendTo + "?subject=" + encodeURIComponent("Notify me when ordering opens") }, "email me"));
+        msg.appendChild(el("a", { href: "mailto:" + (su.sendTo || b.email) + "?subject=" + encodeURIComponent("Notify me when ordering opens") }, "email me"));
         msg.appendChild(document.createTextNode(" and I’ll add you."));
       });
     });

@@ -30,12 +30,13 @@ window.BAKERY = {
   cashapp: "",                        // e.g. "zoebakes" (no $)
   paypalMe: "",                       // e.g. "zoestrickland" → paypal.me/zoestrickland
 
-  // "Notify me" email sign-up shown under the shop. Each sign-up is emailed to
-  // sendTo through FormSubmit (free, no account needed). The very first sign-up
-  // sends a one-time "activate" email to that address: click the link in it,
-  // and every sign-up after that arrives in the inbox. Set show: false to hide.
+  // "Notify me" email sign-up shown under the shop. Set show: false to hide.
+  // Sign-ups go into a Google Sheet once sheetUrl is set (see README:
+  // "Collecting sign-ups in a Google Sheet"). Until then, each one is emailed
+  // to sendTo through FormSubmit instead.
   signup: {
     show: true,
+    sheetUrl: "",                     // ← paste your Google Apps Script web app URL here
     sendTo: "zoedstrickland@gmail.com",
     title: "Ordering opens soon!",
     text: "Leave your email and I’ll let you know as soon as the shop is ready."
