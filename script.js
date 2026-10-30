@@ -73,7 +73,14 @@
 
   // "Notify me" email sign-up
   var su = b.signup || {};
-  if (su.show && (su.sheetUrl || su.sendTo)) {
+  // Turn a Google Form pre-filled link (…/viewform?…&entry.123=you@x.com)
+  // into the form's submit address and its email field name.
+  var gform = null;
+  if (su.googleFormLink) {
+    var m = String(su.googleFormLink).match(/^(https:\/\/docs\.google\.com\/forms\/(?:u\/\d+\/)?d\/e\/[\w-]+)\/[^?]*\?(?:.*&)?(entry\.\d+)=/);
+    if (m) gform = { action: m[1] + "/formResponse", field: m[2] };
+  }
+  if (su.show && (gform || su.sendTo)) {
     var box = document.getElementById("signup");
     var form = document.getElementById("signup-form");
     var input = document.getElementById("signup-email");
@@ -89,10 +96,13 @@
       button.disabled = true;
       msg.textContent = "Sending…";
       var honey = form.elements._honey.value;
-      var send = su.sheetUrl
-        // Google Sheet (Apps Script web app): it can't send a readable reply
-        // across sites, so a request that reaches it counts as success.
-        ? fetch(su.sheetUrl, { method: "POST", mode: "no-cors", body: new URLSearchParams({ email: email, _honey: honey }) })
+      if (honey) { form.hidden = true; msg.textContent = "Thank you!"; return; } // spam bot
+      var fields = {};
+      if (gform) fields[gform.field] = email;
+      var send = gform
+        // Google Forms can't send a readable reply to another site, so a
+        // request that reaches it counts as success.
+        ? fetch(gform.action, { method: "POST", mode: "no-cors", body: new URLSearchParams(fields) })
             .then(function () { return { success: "true" }; })
         : fetch("https://formsubmit.co/ajax/" + encodeURIComponent(su.sendTo), {
             method: "POST",
