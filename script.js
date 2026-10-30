@@ -101,20 +101,34 @@
 
   // Slide the striped separator left whenever the page scrolls, whichever
   // direction: it follows the total distance scrolled, so it never reverses.
+  // The stripes chase that distance with a smooth spring, so they build up
+  // speed over about half a second, catch up, match the scroll, and glide to
+  // a stop instead of jumping into motion.
   var strips = document.querySelectorAll(".band-strip");
   if (strips.length) {
-    var STRIPE = 62, RATE = 0.4, lastY = window.pageYOffset, travel = 0, ticking = false;
-    var render = function () {
-      var y = window.pageYOffset;
-      travel += Math.abs(y - lastY);
-      lastY = y;
+    var STRIPE = 62, RATE = 0.4, OMEGA = 9, DAMP = 0.7; // spring: ~0.5s to catch up, slight speed overshoot
+    var lastY = window.pageYOffset, target = 0, pos = 0, vel = 0, lastT = 0, running = false;
+    var draw = function () {
       var dpr = window.devicePixelRatio || 1;
-      var x = Math.round(((travel * RATE) % STRIPE) * dpr) / dpr; // whole screen pixels keep stripes even
+      var x = Math.round(((pos * RATE) % STRIPE) * dpr) / dpr; // whole screen pixels keep stripes even
       for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
-      ticking = false;
+    };
+    var step = function (now) {
+      var dt = lastT ? Math.min(0.05, (now - lastT) / 1000) : 1 / 60;
+      lastT = now;
+      var y = window.pageYOffset;
+      target += Math.abs(y - lastY);
+      lastY = y;
+      // springy chase toward the target (briefly faster to catch up), never moving backward
+      vel += (OMEGA * OMEGA * (target - pos) - 2 * DAMP * OMEGA * vel) * dt;
+      if (vel < 0) vel = 0;
+      pos = Math.min(target, pos + vel * dt);
+      draw();
+      if (target - pos > 0.05 || vel > 0.5) requestAnimationFrame(step);
+      else { running = false; lastT = 0; vel = 0; }
     };
     window.addEventListener("scroll", function () {
-      if (!ticking) { ticking = true; requestAnimationFrame(render); }
+      if (!running) { running = true; requestAnimationFrame(step); }
     }, { passive: true });
   }
 })();
