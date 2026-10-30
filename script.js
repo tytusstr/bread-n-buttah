@@ -105,7 +105,7 @@
   // glide to a stop (or turn around) instead of jumping.
   var strips = document.querySelectorAll(".band-strip");
   if (strips.length) {
-    var STRIPE = 62, RATE = 0.8, OMEGA = 22, DAMP = 0.7; // spring: ~0.15s to catch up, slight speed overshoot
+    var STRIPE = 62, RATE = 0.4, OMEGA = 22, DAMP = 0.7; // spring: ~0.15s to catch up, slight speed overshoot
     var lastY = window.pageYOffset, target = 0, pos = 0, vel = 0, lastT = 0, running = false;
     var draw = function () {
       var dpr = window.devicePixelRatio || 1;
