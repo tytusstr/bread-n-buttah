@@ -99,68 +99,22 @@
   else window.addEventListener("resize", setNavHeight);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(setNavHeight);
 
-  // Slide the striped separator to the left as the page scrolls.
-  // Most browsers do this natively in CSS (styles.css); this is the fallback.
+  // Slide the striped separator left whenever the page scrolls, whichever
+  // direction: it follows the total distance scrolled, so it never reverses.
   var strips = document.querySelectorAll(".band-strip");
-  var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()");
-  if (strips.length && !supportsScrollTimeline) {
-    var STRIPE = 62, SPEED = 0.3, ticking = false;
+  if (strips.length) {
+    var STRIPE = 62, RATE = 0.4, lastY = window.pageYOffset, travel = 0, ticking = false;
     var render = function () {
-      var x = ((window.pageYOffset || 0) * SPEED) % STRIPE;
+      var y = window.pageYOffset;
+      travel += Math.abs(y - lastY);
+      lastY = y;
+      var dpr = window.devicePixelRatio || 1;
+      var x = Math.round(((travel * RATE) % STRIPE) * dpr) / dpr; // whole screen pixels keep stripes even
       for (var i = 0; i < strips.length; i++) strips[i].style.transform = "translate3d(" + (-x) + "px,0,0)";
       ticking = false;
     };
     window.addEventListener("scroll", function () {
       if (!ticking) { ticking = true; requestAnimationFrame(render); }
-    }, { passive: true });
-    render();
-  }
-
-  // Safari briefly redraws scroll-linked animations a couple of frames late
-  // when a smooth scroll stops, which made the stripes twitch on landing at
-  // Shop. Fix: only while a Shop link is scrolling you there, the stripes hold
-  // still for a short stretch around the landing spot (so a late frame looks
-  // identical). Once the page settles, the hold is removed. The stripe pattern
-  // repeats every 62px, so each switch is lined up to look exactly the same.
-  if (strips.length && supportsScrollTimeline && CSS.supports("animation-range: 0px 6000px")) {
-    var RANGE = 6000, RATE = 0.3, HOLD = 40, PERIOD = 62;
-    var band = document.querySelector(".band");
-    var styleEl = document.createElement("style");
-    document.head.appendChild(styleEl);
-    var offset = 0, zone = null, settleTimer = 0;
-    // stripe position (px) at scroll y, with no offset
-    var shape = function (y, z) {
-      if (!z || y < z[0]) return -y * RATE;
-      if (y <= z[1]) return -z[0] * RATE;
-      return -(y - (z[1] - z[0])) * RATE;
-    };
-    var norm = function (v) { return ((v % PERIOD) + PERIOD) % PERIOD; };
-    var pct = function (y) { return (y / RANGE * 100).toFixed(4) + "%"; };
-    var tf = function (x) { return "{ transform: translate3d(" + x.toFixed(3) + "px,0,0); }"; };
-    var build = function () {
-      var k = "@keyframes band-slide-hold { 0% " + tf(offset);
-      if (zone) k += pct(zone[0]) + " " + tf(offset + shape(zone[0], zone)) + pct(zone[1]) + " " + tf(offset + shape(zone[1], zone));
-      k += "100% " + tf(offset + shape(RANGE, zone)) + " }";
-      styleEl.textContent = k + ".band-strip { animation-name: band-slide-hold; }";
-    };
-    var setShape = function (newZone) {
-      var y = window.pageYOffset;
-      var current = offset + shape(y, zone);
-      offset = norm(current - shape(y, newZone));
-      zone = newZone;
-      build();
-    };
-    build();
-    document.querySelectorAll('a[href="#menu"]').forEach(function (link) {
-      link.addEventListener("click", function () {
-        var land = window.pageYOffset + band.getBoundingClientRect().top - nav.getBoundingClientRect().height;
-        if (Math.abs(window.pageYOffset - land) > HOLD + 2) setShape([Math.max(0, land - HOLD), land + HOLD]);
-      });
-    });
-    window.addEventListener("scroll", function () {
-      if (!zone) return;
-      clearTimeout(settleTimer);
-      settleTimer = setTimeout(function () { setShape(null); }, 250);
     }, { passive: true });
   }
 })();
