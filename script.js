@@ -150,9 +150,9 @@
   // Most browsers do this in CSS (styles.css). This is the fallback for
   // the rest: it eases toward the scroll position every frame so it glides.
   var strips = document.querySelectorAll(".band-strip");
-  var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()");
+  var supportsScrollTimeline = window.CSS && CSS.supports && CSS.supports("animation-timeline: scroll()") && CSS.supports("animation-range: 0px 6000px");
   if (strips.length && !supportsScrollTimeline) {
-    var STRIPE = 62, SPEED = 0.8, current = null, running = false;
+    var STRIPE = 62, SPEED = 0.5, current = null, running = false;
     var render = function () {
       var target = (window.pageYOffset || document.documentElement.scrollTop || 0) * SPEED;
       current = current === null ? target : current + (target - current) * 0.25;

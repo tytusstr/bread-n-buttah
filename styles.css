@@ -69,15 +69,18 @@ section { padding: 5rem 1.25rem; }
   transform: translate3d(0, 0, 0);
 }
 /* Browsers that can tie animation to scrolling do it natively, perfectly smooth */
-@supports (animation-timeline: scroll()) {
+/* The range is a fixed scroll distance (not "whole page"), so phone toolbars
+   resizing the screen can't make the stripes jump. 0.5px sideways per 1px down. */
+@supports (animation-timeline: scroll()) and (animation-range: 0px 6000px) {
   .band-strip {
-    right: -2000px;
+    right: -3000px;
     animation: band-slide linear both;
     animation-timeline: scroll(root);
+    animation-range: 0px 6000px;
   }
   @keyframes band-slide {
     from { transform: translate3d(0, 0, 0); }
-    to { transform: translate3d(-2000px, 0, 0); }
+    to { transform: translate3d(-3000px, 0, 0); }
   }
 }
 
