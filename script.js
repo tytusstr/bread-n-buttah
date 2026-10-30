@@ -118,37 +118,49 @@
 
   // Safari briefly redraws scroll-linked animations a couple of frames late
   // when a smooth scroll stops, which made the stripes twitch on landing at
-  // Shop. So the stripes hold still for a short stretch around that exact
-  // landing spot: a late frame then looks identical and nothing twitches.
-  var RANGE = 6000, SPEED_N = 0.5, HOLD = 40;
+  // Shop. Fix: only while a Shop link is scrolling you there, the stripes hold
+  // still for a short stretch around the landing spot (so a late frame looks
+  // identical). Once the page settles, the hold is removed. The stripe pattern
+  // repeats every 62px, so each switch is lined up to look exactly the same.
   if (strips.length && supportsScrollTimeline && CSS.supports("animation-range: 0px 6000px")) {
+    var RANGE = 6000, RATE = 0.5, HOLD = 40, PERIOD = 62;
     var band = document.querySelector(".band");
     var styleEl = document.createElement("style");
     document.head.appendChild(styleEl);
-    var lastKey = "";
-    var buildKeyframes = function () {
-      var land = window.pageYOffset + band.getBoundingClientRect().top - nav.getBoundingClientRect().height;
-      var a = Math.max(0, land - HOLD), z = Math.min(RANGE, land + HOLD);
-      var key = Math.round(a) + "," + Math.round(z);
-      if (key === lastKey) return;
-      lastKey = key;
-      var held = -a * SPEED_N, end = held - (RANGE - z) * SPEED_N;
-      var pct = function (y) { return (y / RANGE * 100).toFixed(4) + "%"; };
-      styleEl.textContent =
-        "@keyframes band-slide-hold {" +
-        "0% { transform: translate3d(0,0,0); }" +
-        pct(a) + " { transform: translate3d(" + held + "px,0,0); }" +
-        pct(z) + " { transform: translate3d(" + held + "px,0,0); }" +
-        "100% { transform: translate3d(" + end + "px,0,0); } }" +
-        ".band-strip { animation-name: band-slide-hold; }";
+    var offset = 0, zone = null, settleTimer = 0;
+    // stripe position (px) at scroll y, with no offset
+    var shape = function (y, z) {
+      if (!z || y < z[0]) return -y * RATE;
+      if (y <= z[1]) return -z[0] * RATE;
+      return -(y - (z[1] - z[0])) * RATE;
     };
-    buildKeyframes();
-    if (window.ResizeObserver) {
-      var ro = new ResizeObserver(buildKeyframes);
-      ro.observe(nav);
-      ro.observe(document.body);
-    }
-    window.addEventListener("resize", buildKeyframes);
-    if (document.fonts && document.fonts.ready) document.fonts.ready.then(buildKeyframes);
+    var norm = function (v) { return ((v % PERIOD) + PERIOD) % PERIOD; };
+    var pct = function (y) { return (y / RANGE * 100).toFixed(4) + "%"; };
+    var tf = function (x) { return "{ transform: translate3d(" + x.toFixed(3) + "px,0,0); }"; };
+    var build = function () {
+      var k = "@keyframes band-slide-hold { 0% " + tf(offset);
+      if (zone) k += pct(zone[0]) + " " + tf(offset + shape(zone[0], zone)) + pct(zone[1]) + " " + tf(offset + shape(zone[1], zone));
+      k += "100% " + tf(offset + shape(RANGE, zone)) + " }";
+      styleEl.textContent = k + ".band-strip { animation-name: band-slide-hold; }";
+    };
+    var setShape = function (newZone) {
+      var y = window.pageYOffset;
+      var current = offset + shape(y, zone);
+      offset = norm(current - shape(y, newZone));
+      zone = newZone;
+      build();
+    };
+    build();
+    document.querySelectorAll('a[href="#menu"]').forEach(function (link) {
+      link.addEventListener("click", function () {
+        var land = window.pageYOffset + band.getBoundingClientRect().top - nav.getBoundingClientRect().height;
+        if (Math.abs(window.pageYOffset - land) > HOLD + 2) setShape([Math.max(0, land - HOLD), land + HOLD]);
+      });
+    });
+    window.addEventListener("scroll", function () {
+      if (!zone) return;
+      clearTimeout(settleTimer);
+      settleTimer = setTimeout(function () { setShape(null); }, 250);
+    }, { passive: true });
   }
 })();
