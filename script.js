@@ -116,7 +116,7 @@
             body: JSON.stringify({
               email: email,
               _subject: "New Bread n’ Buttah sign-up",
-              message: email + " wants to be notified when ordering opens.",
+              message: email + " wants to be notified when the shop opens.",
               _template: "table",
               _honey: honey
             })
@@ -124,12 +124,12 @@
       send.then(function (data) {
         if (String(data.success) !== "true") throw new Error(data.message || "failed");
         form.hidden = true;
-        msg.textContent = "Thank you! You’re on the list. I’ll email you when ordering opens. 💛";
+        msg.textContent = "Thank you! You’re on the list. I’ll email you when the shop opens. 💛";
       }).catch(function () {
         button.disabled = false;
         msg.textContent = "";
         msg.appendChild(document.createTextNode("Sorry, that didn’t go through. You can also "));
-        msg.appendChild(el("a", { href: "mailto:" + (su.sendTo || b.email) + "?subject=" + encodeURIComponent("Notify me when ordering opens") }, "email me"));
+        msg.appendChild(el("a", { href: "mailto:" + (su.sendTo || b.email) + "?subject=" + encodeURIComponent("Notify me when the shop opens") }, "email me"));
         msg.appendChild(document.createTextNode(" and I’ll add you."));
       });
     });

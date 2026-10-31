@@ -59,7 +59,7 @@ Fill in `venmo`, `cashapp`, or `paypalMe` in `config.js` and a "You can also pay
 
 ## 📋 Collecting sign-ups with a Google Form
 
-The "Ordering opens soon!" box collects emails. To keep them in a private list in your Google account:
+The "Shop opens soon!" box collects emails. To keep them in a private list in your Google account:
 
 1. Go to [forms.google.com](https://forms.google.com) and create a blank form (e.g. "Bread n' Buttah sign-ups").
 2. Make the first question **Short answer**, titled **Email**. Delete any other questions.

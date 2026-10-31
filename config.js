@@ -41,7 +41,7 @@ window.BAKERY = {
     show: true,
     googleFormLink: "https://docs.google.com/forms/d/e/1FAIpQLSc3jVn9ouo9hkI92juaYAterNRwxZ8XJSIvfn8fAiVjjTRGsA/viewform?usp=pp_url&entry.1140664513=test@example.com",
     sendTo: "zoedstrickland@gmail.com",
-    title: "Ordering opens soon!",
+    title: "Shop opens soon!",
     text: "Leave your email and I’ll let you know as soon as the shop is ready."
   },
 
