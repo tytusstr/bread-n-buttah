@@ -70,7 +70,7 @@
 
   if (b.shopNotice) {
     var notice = document.getElementById("shop-notice");
-    notice.textContent = b.shopNotice;
+    notice.textContent = "(" + b.shopNotice + ")";
     notice.hidden = false;
   }
 
