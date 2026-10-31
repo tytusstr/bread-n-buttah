@@ -30,6 +30,9 @@ window.BAKERY = {
   cashapp: "",                        // e.g. "zoebakes" (no $)
   paypalMe: "",                       // e.g. "zoestrickland" → paypal.me/zoestrickland
 
+  // Little notice under "What's for sale?". Set to "" to remove it.
+  shopNotice: "Shop opens soon",
+
   // "Notify me" email sign-up shown under the shop. Set show: false to hide.
   // Sign-ups go into a private Google Form once googleFormLink is set (see
   // README: "Collecting sign-ups with a Google Form"). Until then, each one is

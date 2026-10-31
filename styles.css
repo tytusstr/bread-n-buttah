@@ -145,6 +145,12 @@ h1 {
 .menu h2 { margin-bottom: 0; }
 /* arrow matches the heading's size and stroke weight, and takes up no space
    (negative bottom margin) so the cards stay where they were */
+/* temporary notice under the heading (text set in config.js) */
+.shop-notice {
+  display: table; margin: .9rem auto 0;
+  font-family: "Jost", system-ui, sans-serif; text-transform: uppercase; letter-spacing: .14em; font-size: .8rem;
+  color: var(--espresso); background: var(--sand); border-radius: 999px; padding: .4rem 1rem;
+}
 .down-arrow {
   --arrow-h: clamp(2.1rem, 5vw, 3rem);
   --arrow-gap: calc(var(--arrow-h) * .3);

@@ -68,6 +68,12 @@
     p.hidden = false;
   }
 
+  if (b.shopNotice) {
+    var notice = document.getElementById("shop-notice");
+    notice.textContent = b.shopNotice;
+    notice.hidden = false;
+  }
+
   // Note under the menu once any item takes payment online
   if (menu.some(function (item) { return item.payLink; })) document.getElementById("secure-note").hidden = false;
 
